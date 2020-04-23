@@ -18,8 +18,8 @@ target/
 *.iws
 *.iml
 *.ipr
-
-/Database.java
+### AWS stuff
+**/Database.java
 
 ### NetBeans ###
 /nbproject/private/
