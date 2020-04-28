@@ -1,5 +1,6 @@
 package com.example.demo.Repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -11,8 +12,10 @@ public class AppRepository extends Database{
     private PreparedStatement preparedStatement;
     private String query;
 
+
+
     public ResultSet getAllMusic() {
-        query = "SELECT * FROM music";
+        query = "SELECT * FROM fitnessdb.bruger";
         try {
             preparedStatement = getConnection().prepareStatement(query);
             return preparedStatement.executeQuery();

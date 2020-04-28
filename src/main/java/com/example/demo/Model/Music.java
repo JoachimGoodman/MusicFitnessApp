@@ -1,13 +1,30 @@
 package com.example.demo.Model;
 
-public class Music {
-    private String name;
+import javax.persistence.*;
 
-    public String getName() {
-        return name;
+@Entity
+@Table (name="music")
+public class Music {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "music_Name")
+    private String musicName;
+
+
+    public int getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getMusicName() {
+        return musicName;
+    }
+
+    public void setMusicName(String name) {
+        this.musicName = name;
     }
 }
