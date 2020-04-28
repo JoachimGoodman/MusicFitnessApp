@@ -1,10 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" th:href="@{style.css}">
+    <title>Index</title>
 </head>
 <body>
-test min røv
+<div id="header">
+    <nav class="navbar navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="images/logo_black.JPG"  alt="Fitness Sound">
+        </a>
+    </nav>
+</div>
+<div class="container-fluid">
+
+    <div class="row">
+        <div id="sidebar" class="col-3">
+            <h6>Fitness programmer</h6>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="puls_opvarming">Puls/Opvarming</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="crossfit">Crossfit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="løb">Løb</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="styrketræning">Styrketræning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="trx">TRX</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="udstrækning">Udstrækning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="brugerdefineret">Brugerdefineret</a>
+                </li>
+            </ul>
+            <h6>Bruger informationer</h6>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="workouts">Mine workouts</a>
+                </li>
+            </ul>
+            <h6>Indstillinger</h6>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="mininformation">Min information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="mineabonenter">Mine abonnenter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="venner">Venner</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="forbindelser">Forbindelser</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-subject="lydniveau">Lydniveau</a>
+                </li>
+            </ul>
+        </div>
+        <div id="content" class="col-9">
+            <h5>
+                Velkommen til Fitnes Sound</h5>
+            <p>
+                Vælg et workout program og få din musik direkte!
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sollicitudin justo sit amet tincidunt scelerisque. Maecenas efficitur dignissim fringilla. Aliquam erat volutpat. Proin ut efficitur ipsum. Fusce iaculis malesuada eleifend. Sed bibendum diam quis erat dignissim, at euismod orci maximus. Sed et lectus non augue tristique laoreet nec nec nunc.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="footer" class="col-12">
+            <span>Dat18A 2020 ©Copyright Plan B</span>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $("ul a.nav-link").click(function () {
+            var subject = $(this).data("subject");
+            $.get("/content/?content=" + subject, function (content) {
+                $('#content').html(content);
+            });
+            $("#sidebar > ul.nav > li > a").removeClass("active");
+            $(this).addClass("active");
+        });
+    });
+</script>
 </body>
 </html>
