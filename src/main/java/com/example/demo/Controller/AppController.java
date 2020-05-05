@@ -35,7 +35,6 @@ public class AppController {
     @PostMapping("/sync")
     public void sendTrack() throws IOException {
         appService.sendTrack(null);
-
     }
 
     @GetMapping("/openServerSocket")
