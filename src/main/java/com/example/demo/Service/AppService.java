@@ -31,10 +31,10 @@ public class AppService {
 
     public Object waitForHost() throws IOException {
         //String msg = in.readUTF();
-        JSONObject jo = new JSONObject();
-        jo.put("path", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
-        jo.put("time_stamp", "00:01:07");
-        return jo;
+        Music music = new Music();
+        music.setPath("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+        music.setTime_stamp("00:01:07");
+        return music;
     }
 
     public List<Music> getAllMusic() {
