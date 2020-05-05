@@ -8,6 +8,44 @@
     <title>Index</title>
 </head>
 <body>
+
+<audio controls
+       id="audio"
+       preload="auto"
+       src="audio_test.mp3#t=00:00:05"
+       type="audio/mpeg" ></audio>
+
+<button onclick="playAudio()">play</button>
+<button onclick="pauseAudio()">pause</button>
+
+<script>
+
+    let music = {
+        music_name: "audio_test.mp3",
+        time_stamp: "00:00:07"
+    }
+
+    const x = document.getElementById("audio");
+
+    function playAudio() {
+        x.play();
+    }
+
+    function pauseAudio() {
+        x.pause();
+    }
+
+    fetch(music)
+        .then(function() {
+            const player = document.getElementById("audio")
+            player.src = music.music_name + "#t=" + music.time_stamp
+
+        })
+
+    console.log(data.music_name)
+    console.log(data.time_stamp)
+</script>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div id="header">
     <nav class="navbar navbar-dark">
         <a class="navbar-brand" href="#">
