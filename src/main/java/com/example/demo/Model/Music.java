@@ -1,7 +1,11 @@
 package com.example.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Entity
 @Table (name="music")
 public class Music {
@@ -30,7 +34,7 @@ public class Music {
         this.musicName = name;
     }
 
-
+    @JsonProperty
     public String getPath() {
         return path;
     }
@@ -38,7 +42,7 @@ public class Music {
     public void setPath(String path) {
         this.path = path;
     }
-
+    @JsonProperty
     public String getTime_stamp() {
         return time_stamp;
     }

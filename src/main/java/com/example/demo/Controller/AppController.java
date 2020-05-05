@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Music;
 import com.example.demo.Service.AppService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +33,9 @@ public class AppController {
 
     }
 
-    @GetMapping("/syncU/{path}/{time}")
-    public void sendTrack(@PathVariable("path") String path,@PathVariable("time") String time) throws IOException {
-        appService.sendTrack(path,time);
+    @PostMapping("/syncU")
+    public void sendTrack(@ModelAttribute Music m) throws IOException {
+        appService.sendTrack(m.getPath(),m.getTime_stamp());
 
     }
 

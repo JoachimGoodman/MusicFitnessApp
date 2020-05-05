@@ -57,7 +57,7 @@
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         var dateTime = date+':'+time;
-        $.post("http://localhost:5000/sync",
+        $.post("http://localhost:5000/syncU",
             {
                 path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
                 time_stamp: dateTime
