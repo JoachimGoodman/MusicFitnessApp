@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -19,11 +19,13 @@
 <audio controls
        id="audio"
        preload="auto"
-       src=""
+       src="audio_test.mp3"
        type="audio/mpeg" ></audio>
 
 <button onclick="playAudio()">play</button>
 <button onclick="pauseAudio()">pause</button>
+
+
 
 <button type="button" id="button">Request data</button>
 <button type="button" id="postButton">Send data</button>
@@ -44,13 +46,7 @@
     function pauseAudio() {
         x.pause();
     }
-    // document.addEventListener('DOMContentLoaded', (event) => {
-    //     fetch(music)
-    //         .then(function() {
-    //             const player = document.getElementById("audio")
-    //             player.src = music.music_name + "#t=" + music.time_stamp
-    //         })
-    // })
+
 
     $('#postButton').click(function () {
         var today = new Date();
@@ -60,7 +56,7 @@
         $.post("http://localhost:5000/syncU",
             {
                 path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                time_stamp: dateTime
+                time_stamp: x.currentTime
             },
             function () {
                 console.log("send")
