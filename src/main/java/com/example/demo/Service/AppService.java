@@ -37,10 +37,12 @@ public class AppService {
 
     public Object waitForHost() throws IOException {
         String msg = in.readUTF();
+        System.out.println(msg);
         Music music = new Music();
         String msga[]=msg.split(";");
         music.setPath(msga[0]);
         music.setTime_stamp(msga[1]);
+
         return music;
     }
 
@@ -51,6 +53,7 @@ public class AppService {
     public void sendTrack(String path,String time) throws IOException {
         Socket client=ss.accept();
         in=new DataInputStream(client.getInputStream());
+        System.out.println(path+";"+time);
         out=new DataOutputStream(client.getOutputStream());
         out.writeUTF(path+";"+time);
 

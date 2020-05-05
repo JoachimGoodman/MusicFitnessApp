@@ -15,13 +15,14 @@ public class AppController {
     }
 
     @GetMapping("/getMusic")
-    public Object getMusic() {
-        return appService.getAllMusic();
+    public Object getMusic() throws IOException {
+        appService.startClient();
+        return null;
     }
 
     @PostMapping("/play/{music_name}/{time}/{groupid}")
     public Object postMusic() throws IOException {
-        appService.startClient();
+        //appService.startClient();
         return "index";
     }
 
@@ -31,7 +32,7 @@ public class AppController {
 
     }
 
-    @PostMapping("/sync/")
+    @GetMapping("/syncU/{path}/{time}")
     public void sendTrack(@PathVariable("path") String path,@PathVariable("time") String time) throws IOException {
         appService.sendTrack(path,time);
 
