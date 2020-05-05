@@ -29,11 +29,18 @@ public class AppService {
     public AppService() throws IOException {
     }
 
+    public void startClient() throws IOException {
+        s=new Socket("localhost",8000);
+        in=new DataInputStream(s.getInputStream());
+
+    }
+
     public Object waitForHost() throws IOException {
-        //String msg = in.readUTF();
+        String msg = in.readUTF();
         Music music = new Music();
-        music.setPath("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
-        music.setTime_stamp("00:01:07");
+        String msga[]=msg.split(";");
+        music.setPath(msga[0]);
+        music.setTime_stamp(msga[1]);
         return music;
     }
 
@@ -41,10 +48,12 @@ public class AppService {
         return mr.findAll();
     }
 
-    public void sendTrack(Object o) throws IOException {
+    public void sendTrack(String path,String time) throws IOException {
         Socket client=ss.accept();
-        in=new DataInputStream(s.getInputStream());
-        out=new DataOutputStream(s.getOutputStream());
+        in=new DataInputStream(client.getInputStream());
+        out=new DataOutputStream(client.getOutputStream());
+        out.writeUTF(path+";"+time);
+
     }
 
     public void openServerSocket() throws IOException {

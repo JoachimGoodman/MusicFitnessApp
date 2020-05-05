@@ -1,9 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Service.AppService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -22,7 +20,8 @@ public class AppController {
     }
 
     @PostMapping("/play/{music_name}/{time}/{groupid}")
-    public Object postMusic() {
+    public Object postMusic() throws IOException {
+        appService.startClient();
         return "index";
     }
 
@@ -32,9 +31,9 @@ public class AppController {
 
     }
 
-    @PostMapping("/sync")
-    public void sendTrack() throws IOException {
-        appService.sendTrack(null);
+    @PostMapping("/sync/")
+    public void sendTrack(@PathVariable("path") String path,@PathVariable("time") String time) throws IOException {
+        appService.sendTrack(path,time);
 
     }
 
