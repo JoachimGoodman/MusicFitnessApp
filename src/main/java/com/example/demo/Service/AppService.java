@@ -52,7 +52,7 @@ public class AppService {
 
     public void sendTrack(String path,String time) throws IOException {
         Socket client=ss.accept();
-        in=new DataInputStream(client.getInputStream());
+
         System.out.println(path+";"+time);
         out=new DataOutputStream(client.getOutputStream());
         out.writeUTF(path+";"+time);
