@@ -52,14 +52,18 @@ public class AppService {
 
     public void sendTrack(String path,String time) throws IOException {
         Socket client=ss.accept();
-
-        System.out.println(path+";"+time);
         out=new DataOutputStream(client.getOutputStream());
-        out.writeUTF(path+";"+time);
+        Float hours = Float.valueOf(time) / 3600;
+        Float minutes = (Float.valueOf(time) % 3600) / 60;
+        Float seconds = Float.valueOf(time) % 60;
+        String timeString = String.format("%02d:%02d:%02d", Math.round(hours), Math.round(minutes), Math.round(seconds));
+        System.out.println(path+";"+time);
+        out.writeUTF(path+";"+timeString);
 
     }
 
     public void openServerSocket() throws IOException {
        ss=new ServerSocket(8000);
     }
+
 }

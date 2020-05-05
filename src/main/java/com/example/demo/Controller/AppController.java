@@ -32,7 +32,6 @@ public class AppController {
         return appService.waitForHost();
 
     }
-
     @PostMapping("/syncU")
     public void sendTrack(@ModelAttribute Music m) throws IOException {
         appService.sendTrack(m.getPath(),m.getTime_stamp());

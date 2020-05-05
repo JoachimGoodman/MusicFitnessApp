@@ -68,7 +68,7 @@
     $("#button").click(function(){
         $.get("http://localhost:5000/sync", function(data, status){
             const audioPlayer = document.getElementById("audio");
-            audioPlayer.src = data.path +  ".mp3#t=" + data.time_stamp
+            audioPlayer.src = data.path +  "#t=" + data.time_stamp
             audioPlayer.play()
         });
     });
