@@ -18,6 +18,8 @@
 <button onclick="playAudio()">play</button>
 <button onclick="pauseAudio()">pause</button>
 
+<button type="button" id="button">Request data</button>
+
 <script>
 
     let music = {
@@ -34,16 +36,21 @@
     function pauseAudio() {
         x.pause();
     }
+    // document.addEventListener('DOMContentLoaded', (event) => {
+    //     fetch(music)
+    //         .then(function() {
+    //             const player = document.getElementById("audio")
+    //             player.src = music.music_name + "#t=" + music.time_stamp
+    //         })
+    // })
 
-    fetch(music)
-        .then(function() {
-            const player = document.getElementById("audio")
-            player.src = music.music_name + "#t=" + music.time_stamp
+    // ajax
+    $("#button").click(function(){
+        $.get(music, function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
+        });
+    });
 
-        })
-
-    console.log(data.music_name)
-    console.log(data.time_stamp)
 </script>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div id="header">

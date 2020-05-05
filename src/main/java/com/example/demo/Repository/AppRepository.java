@@ -12,16 +12,4 @@ public class AppRepository extends Database{
     private PreparedStatement preparedStatement;
     private String query;
 
-
-
-    public ResultSet getAllMusic() {
-        query = "SELECT * FROM fitnessdb.bruger";
-        try {
-            preparedStatement = getConnection().prepareStatement(query);
-            return preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
