@@ -14,6 +14,6 @@ public class HomeController {
     }
 
     @GetMapping("/play")
-    public String video() {return "video";}
+    public String video() {return "video";} // test
 
 }
