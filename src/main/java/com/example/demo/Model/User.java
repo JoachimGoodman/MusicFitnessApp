@@ -10,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int roleid;
+    private int fk_rank;
 
     private String username;
 
@@ -85,11 +85,11 @@ public class User {
 
 
 
-    public int getRoleid() {
-        return roleid;
+    public int getFk_rank() {
+        return fk_rank;
     }
 
-    public void setRoleid(int roleid) {
-        this.roleid = roleid;
+    public void setFk_rank(int roleid) {
+        this.fk_rank = roleid;
     }
 }
