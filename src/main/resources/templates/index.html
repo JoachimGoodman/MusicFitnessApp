@@ -30,22 +30,7 @@
 <button type="button" id="button">Request data</button>
 <button type="button" id="postButton">Send data</button>
 
-<script>
-    var getUrlParameter = function getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(1),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-            }
-        }
-    };
-
+<script type="application/javascript">
     let music = {
         music_name: "audio_test",
         time_stamp: "00:00:07"
@@ -67,7 +52,7 @@
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         var dateTime = date+':'+time;
-        $.post("syncU/?groupid="+getUrlParameter('groupid'),
+        $.post("http://localhost:5000/syncU",
             {
                 path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
                 time_stamp: x.currentTime
@@ -80,14 +65,14 @@
 
     // ajax
     $("#button").click(function(){
-        $.get("/sync?userid=" + getUrlParameter('userid'), function (data, status) {
+        $.get("http://localhost:5000/sync", function(data, status){
             const audioPlayer = document.getElementById("audio");
             audioPlayer.src = data.path +  "#t=" + data.time_stamp
             audioPlayer.play()
         });
     });
-
 </script>
+
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div id="header">
     <nav class="navbar navbar-dark">

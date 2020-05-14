@@ -1,0 +1,79 @@
+<audio
+       id="audio"
+       preload="auto"
+       src="audio_test.mp3"
+       type="audio/mpeg" ></audio>
+
+<input type="range" id="slider" min="0" max="100" value="0" onchange="slider()"><br>
+
+<button onclick="playAudio()">play</button>
+<button onclick="pauseAudio()">pause</button>
+
+<button type="button" id="button">Request data</button>
+<button type="button" id="postButton">Send data</button>
+
+<script type="application/javascript">
+    const audioPlayer = document.getElementById("audio")
+    var seekslider, seeking = false, seekto
+
+    sliderProgress = document.getElementById("slider")
+    sliderProgress.addEventListener("mousedown", function (event) {
+        seeking = true
+        slider(event)
+    })
+    sliderProgress.addEventListener("mousemove", function (event) {
+        slider(event)
+    })
+    sliderProgress.addEventListener("mouseup", function () {
+        seeking = false
+    })
+
+    function slider(event) {
+        if(seeking) {
+            sliderProgress.value = event.clientX - sliderProgress.offsetLeft
+            seekto = audioPlayer.duration * (sliderProgress.value / 100)
+            audioPlayer.duration = seekto
+        }
+    }
+
+    let music = {
+        music_name: "audio_test",
+        time_stamp: "00:00:07"
+    }
+
+
+
+    function playAudio() {
+        audio.play();
+    }
+
+    function pauseAudio() {
+        audio.pause();
+    }
+
+
+    $('#postButton').click(function () {
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
+        var dateTime = date+':'+time;
+        $.post("http://localhost:5000/syncU",
+            {
+                path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                time_stamp: x.currentTime
+            },
+            function () {
+                console.log("send")
+            }
+        )
+    })
+
+    // ajax
+    $("#button").click(function(){
+        $.get("http://localhost:5000/sync", function(data, status){
+            const audioPlayer = document.getElementById("audio");
+            audioPlayer.src = data.path +  "#t=" + data.time_stamp
+            audioPlayer.play()
+        });
+    });
+</script>
