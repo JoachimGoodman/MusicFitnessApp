@@ -3,7 +3,7 @@ package com.example.demo.Model;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "user")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -22,6 +22,17 @@ public class User {
 
     private String email;
 
+    //JPA uses a default constructer indirectly which is why it is protected,
+    protected User () {}
+
+    public User (int fk_rank, String username, String password, String firstname, String lastname, String email) {
+        this.fk_rank = fk_rank;
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+    }
 
     public String getUsername() {
 
@@ -92,4 +103,5 @@ public class User {
     public void setFk_rank(int roleid) {
         this.fk_rank = roleid;
     }
+
 }
