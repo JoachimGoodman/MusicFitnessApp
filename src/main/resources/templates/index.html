@@ -16,64 +16,6 @@
 </head>
 <body>
 
-<audio controls
-       id="audio"
-       preload="auto"
-       src="audio_test.mp3"
-       type="audio/mpeg" ></audio>
-
-<button onclick="playAudio()">play</button>
-<button onclick="pauseAudio()">pause</button>
-
-
-
-<button type="button" id="button">Request data</button>
-<button type="button" id="postButton">Send data</button>
-
-<script type="application/javascript">
-    let music = {
-        music_name: "audio_test",
-        time_stamp: "00:00:07"
-    }
-
-    const x = document.getElementById("audio");
-
-    function playAudio() {
-        x.play();
-    }
-
-    function pauseAudio() {
-        x.pause();
-    }
-
-
-    $('#postButton').click(function () {
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
-        var dateTime = date+':'+time;
-        $.post("http://localhost:5000/syncU",
-            {
-                path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                time_stamp: x.currentTime
-            },
-            function () {
-                console.log("send")
-            }
-        )
-    })
-
-    // ajax
-    $("#button").click(function(){
-        $.get("http://localhost:5000/sync", function(data, status){
-            const audioPlayer = document.getElementById("audio");
-            audioPlayer.src = data.path +  "#t=" + data.time_stamp
-            audioPlayer.play()
-        });
-    });
-</script>
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div id="header">
     <nav class="navbar navbar-dark">
         <a class="navbar-brand" href="#">
@@ -85,54 +27,76 @@
 
     <div class="row">
         <div id="sidebar" class="col-3">
-            <h6>Fitness programmer</h6>
+            <h6>Musik</h6>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="puls_opvarming">Puls/Opvarming</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="crossfit">Crossfit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="løb">Løb</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="styrketræning">Styrketræning</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="trx">TRX</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="udstrækning">Udstrækning</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="brugerdefineret">Brugerdefineret</a>
+                    <a class="nav-link" href="#" data-subject="musik">Musik</a>
                 </li>
             </ul>
-            <h6>Bruger informationer</h6>
+            <h6>Grupper</h6>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="workouts">Mine workouts</a>
+                    <a class="nav-link" href="#" data-subject="gruppe">Gruppe</a>
                 </li>
             </ul>
-            <h6>Indstillinger</h6>
+            <h6>Bruger</h6>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="mininformation">Min information</a>
+                    <a class="nav-link" href="#" data-subject="puls_opvarming">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="mineabonenter">Mine abonnenter</a>
+                    <a class="nav-link" href="#" data-subject="puls_opvarming">Signup</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="venner">Venner</a>
+                    <a class="nav-link" href="#" data-subject="puls_opvarming">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="forbindelser">Forbindelser</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-subject="lydniveau">Lydniveau</a>
+                    <a class="nav-link" href="#" data-subject="puls_opvarming">Logud</a>
                 </li>
             </ul>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="crossfit">Crossfit</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="løb">Løb</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="styrketræning">Styrketræning</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="trx">TRX</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="udstrækning">Udstrækning</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="brugerdefineret">Brugerdefineret</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <h6>Bruger informationer</h6>-->
+<!--            <ul class="nav flex-column">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="workouts">Mine workouts</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <h6>Indstillinger</h6>-->
+<!--            <ul class="nav flex-column">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="mininformation">Min information</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="mineabonenter">Mine abonnenter</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="venner">Venner</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="forbindelser">Forbindelser</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-subject="lydniveau">Lydniveau</a>-->
+<!--                </li>-->
+<!--            </ul>-->
         </div>
         <div id="content" class="col-9">
             <h5>
