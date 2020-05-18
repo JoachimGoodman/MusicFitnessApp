@@ -1,56 +1,78 @@
-<audio
-       id="audio"
+<audio controls
+       id="song"
        preload="auto"
-       src="audio_test.mp3"
+       src=""
        type="audio/mpeg" ></audio>
 
-<input type="range" id="slider" min="0" max="100" value="0" onchange="slider()"><br>
 
-<button onclick="playAudio()">play</button>
-<button onclick="pauseAudio()">pause</button>
+
+<div id="song-name"></div>
+<div id="song-title"></div>
+<img src="" id="song-image" alt="">
+<button id="previous-song">Previous</button>
+<button id="play-pause" onclick="playPause()">Play</button>
+<button id="next-song">Next</button>
+<br>
+<p>Volume</p>
+<input type="range" id="volume" min="0" max="100" value="0">
+<br>
+<p>Process</p>
+<input type="range" id="progress" min="0" max="100" value="0" onclick="changeProgress()">
+<br>
+
+
 
 <button type="button" id="button">Request data</button>
 <button type="button" id="postButton">Send data</button>
 
 <script type="application/javascript">
-    const audioPlayer = document.getElementById("audio")
-    var seekslider, seeking = false, seekto
 
-    sliderProgress = document.getElementById("slider")
-    sliderProgress.addEventListener("mousedown", function (event) {
-        seeking = true
-        slider(event)
-    })
-    sliderProgress.addEventListener("mousemove", function (event) {
-        slider(event)
-    })
-    sliderProgress.addEventListener("mouseup", function () {
-        seeking = false
-    })
+    const musicJson = {
+        "song_src": "audio_test.mp3",
+        "song_name": "Audio Test File",
+        "song_title": "title-song-and-stuff",
+        "progress": "00:15"
+    }
 
-    function slider(event) {
-        if(seeking) {
-            sliderProgress.value = event.clientX - sliderProgress.offsetLeft
-            seekto = audioPlayer.duration * (sliderProgress.value / 100)
-            audioPlayer.duration = seekto
+    const   song_title = document.querySelector('#song-title'),
+            song_name = document.querySelector('#song-name'),
+            progress = document.querySelector('#progress'),
+            pp = document.querySelector('#play-pause'),
+            volume = document.querySelector('#volume'),
+            nextSong = document.querySelector('#next-song'),
+            previousSong = document.querySelector('#previous-song'),
+            song = document.querySelector('#song')
+
+    var playing = true
+
+    song.src = musicJson.song_src
+
+    function playPause() {
+        const   pp = document.querySelector('#play-pause'),
+                song = document.querySelector('#song')
+        if (playing) {
+            pp.textContent = "Pause"
+            song.play()
+            playing = false
+        } else {
+            pp.innerHTML = "Play"
+            song.pause()
+            playing = true
         }
     }
 
-    let music = {
-        music_name: "audio_test",
-        time_stamp: "00:00:07"
+    function updateProgress() {
+        const progress = document.querySelector('#progress')
+        progress.max = document.querySelector('#song').duration
+        progress.value = document.querySelector('#song').currentTime
     }
 
+    setInterval(updateProgress, 500)
 
-
-    function playAudio() {
-        audio.play();
+    function changeProgress() {
+        const progressBar = document.querySelector('#progress');
+        document.querySelector('#song').currentTime = progressBar.value;
     }
-
-    function pauseAudio() {
-        audio.pause();
-    }
-
 
     $('#postButton').click(function () {
         var today = new Date();

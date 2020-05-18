@@ -34,3 +34,7 @@ pre.code-block{
     color: #000000;
 }
 
+input[type=range] {
+    width: 100%;
+    border: none;
+}
