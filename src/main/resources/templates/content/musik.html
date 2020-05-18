@@ -4,8 +4,6 @@
        src=""
        type="audio/mpeg" ></audio>
 
-
-
 <div id="song-name"></div>
 <div id="song-title"></div>
 <img src="" id="song-image" alt="">
@@ -14,13 +12,11 @@
 <button id="next-song">Next</button>
 <br>
 <p>Volume</p>
-<input type="range" id="volume" min="0" max="100" value="0">
+<input type="range" id="volume" min="0" max="100" value="0" onclick="changeVolume()">
 <br>
 <p>Process</p>
 <input type="range" id="progress" min="0" max="100" value="0" onclick="changeProgress()">
 <br>
-
-
 
 <button type="button" id="button">Request data</button>
 <button type="button" id="postButton">Send data</button>
@@ -70,8 +66,20 @@
     setInterval(updateProgress, 500)
 
     function changeProgress() {
-        const progressBar = document.querySelector('#progress');
-        document.querySelector('#song').currentTime = progressBar.value;
+        const progress = document.querySelector('#progress');
+        document.querySelector('#song').currentTime = progress.value;
+    }
+
+    function updateVolume() {
+        const volume = document.querySelector('#volume')
+        volume.value = document.querySelector('#song').volume
+    }
+
+    setInterval(updateVolume, 500)
+
+    function changeVolume() {
+        const volume = document.querySelector('#volume')
+        document.querySelector('#song').volume = volume.value
     }
 
     $('#postButton').click(function () {
