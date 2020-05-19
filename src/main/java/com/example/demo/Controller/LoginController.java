@@ -17,21 +17,19 @@ public class LoginController {
 
   @Autowired
   UserService us;
-/*
-    @GetMapping("/login")
-    public String login(Model model){
-        us.findAll();
-        //model.addAttribute("user", new User());
-        return "login";
-    }
 
-    @PostMapping("/login")
-    public String Confirmlogin(@ModelAttribute User user){
-        us.findAll();
-
-        return "index";
-    }
-    */
-
+//    @GetMapping("/login")
+//    public String login(Model model){
+//        us.findAll();
+//        //model.addAttribute("user", new User());
+//        return "login";
+//    }
+//
+//    @PostMapping("/login")
+//    public String Confirmlogin(@ModelAttribute User user){
+//        us.findAll();
+//
+//        return "index";
+//    }
 
 }
