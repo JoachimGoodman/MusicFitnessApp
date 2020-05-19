@@ -27,6 +27,11 @@
         </a>
     </nav>
 </div>
+
+<div sec:authorize="isAuthenticated()">
+    Authenticated as <span sec:authentication="name"></span>
+</div>
+
 <div class="container-fluid">
     <div class="row">
         <div id="sidebar" class="col-3">
