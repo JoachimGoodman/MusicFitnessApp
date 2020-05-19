@@ -16,4 +16,9 @@ public class HomeController {
     @GetMapping("/play")
     public String video() {return "video";} // test
 
+    @GetMapping("/profil")
+    public String profil() {
+        return "content/old/mininformation";
+    }
+
 }
