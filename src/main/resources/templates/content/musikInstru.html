@@ -17,12 +17,38 @@
 <p>Process</p>
 <input type="range" id="progress" min="0" max="100" value="0" onclick="changeProgress()">
 <br>
-
-<button type="button" id="button">Request data</button>
+<div sec:authorize="hasAuthority('ADMIN')" >
+    <button  type="button" id="button">Request data</button>
+</div>
 <button type="button" id="postButton">Send data</button>
 
 <script type="application/javascript">
+    /* Receives data from our API */
+    function postData() {
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
+        var dateTime = date+':'+time;
+        $.post("http://localhost:5000/syncU",
+            {
+                path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                time_stamp: x.currentTime
+            },
+            function () {
+                console.log("send")
+            }
+        )
+    }
 
+    function receiveData() {
+        $.get("http://localhost:5000/sync", function(data, status){
+            const audioPlayer = document.getElementById("audio");
+            audioPlayer.src = data.path +  "#t=" + data.time_stamp
+            audioPlayer.play()
+        });
+    }
+
+    /* for testing */
     const musicJson = {
         "song_src": "audio_test.mp3",
         "song_name": "Audio Test File",
@@ -40,6 +66,7 @@
                 song = document.querySelector('#song')
         if (playing) {
             pp.textContent = "Pause"
+            receiveData()
             song.play()
             playing = false
         } else {
@@ -78,29 +105,6 @@
     }
 
 
-    /* Receives data from our API */
-    $('#postButton').click(function () {
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
-        var dateTime = date+':'+time;
-        $.post("http://localhost:5000/syncU",
-            {
-                path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                time_stamp: x.currentTime
-            },
-            function () {
-                console.log("send")
-            }
-        )
-    })
 
-    // ajax
-    $("#button").click(function(){
-        $.get("http://localhost:5000/sync", function(data, status){
-            const audioPlayer = document.getElementById("audio");
-            audioPlayer.src = data.path +  "#t=" + data.time_stamp
-            audioPlayer.play()
-        });
-    });
+
 </script>

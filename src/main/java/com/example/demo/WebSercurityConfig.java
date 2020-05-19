@@ -41,7 +41,7 @@ public class WebSercurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/createUser","/admin","/answer","/beskeder","/createAD","/createAV","/editAD","editAV","/deleteAD/*","/deleteAV/*").hasRole(ADMIN)
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/").permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
