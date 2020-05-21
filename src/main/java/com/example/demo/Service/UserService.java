@@ -22,5 +22,10 @@ public class UserService {
 
     }
 
+    public void createUser(User user) {
+        ur.logUser(user.getUsername(), user.getPassword(), true, user.getFirstname(), user.getLastname(), user.getEmail());
+        ur.logPermission(user.getUsername(), "ROLE_BRUGER");
+    }
+
 
 }

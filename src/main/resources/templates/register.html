@@ -15,7 +15,7 @@
     <title>Registration</title>
 </head>
 <body>
-<form id="regForm" modelAttribute="user" action="registerProcess" method="post">
+<form id="regForm" modelAttribute="user" action="/register" method="post">
     <table align="center">
         <tr>
             <td>
@@ -30,7 +30,7 @@
                 <label path="password">Password</label>
             </td>
             <td>
-                <password path="password" name="password" id="password" />
+                <input path="password" name="password" id="password" />
             </td>
         </tr>
         <tr>
@@ -71,6 +71,13 @@
         </tr>
     </table>
 </form>
+
+<script>
+    $( "#register" ).click(function() {
+        console.log("hello");
+    });
+
+</script>
 </body>
 </html>
 

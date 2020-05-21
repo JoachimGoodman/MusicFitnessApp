@@ -17,9 +17,9 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     List<User> findAll();
 
     @Modifying
-    @Query(value = "insert into users (username,password,enabled) VALUES (:username,:password,:enabled);", nativeQuery = true)
+    @Query(value = "insert into users (username,password,enabled, firstname, lastname, email) VALUES (:username,:password,:enabled, :firstname, :lastname, :email);", nativeQuery = true)
     @Transactional
-    void logUser(@Param("username") String username, @Param("password") String password,@Param("enabled") boolean enabled);
+    void logUser(@Param("username") String username, @Param("password") String password,@Param("enabled") boolean enabled, @Param("firstname") String firstname, @Param("lastname") String lastname, @Param("email") String email);
 
     @Modifying
     @Query(value = "insert into authorities values (:username,:role);", nativeQuery = true)

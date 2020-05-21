@@ -10,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int fk_rank;
+    //private int fk_rank;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -25,8 +25,8 @@ public class User {
     //JPA uses a default constructer indirectly which is why it is protected,
     protected User () {}
 
-    public User (int fk_rank, String username, String password, String firstname, String lastname, String email) {
-        this.fk_rank = fk_rank;
+    public User (/*int fk_rank,*/ String username, String password, String firstname, String lastname, String email) {
+        //this.fk_rank = fk_rank;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
@@ -96,12 +96,12 @@ public class User {
 
 
 
-    public int getFk_rank() {
+   /* public int getFk_rank() {
         return fk_rank;
     }
 
     public void setFk_rank(int roleid) {
         this.fk_rank = roleid;
-    }
+    } */
 
 }
