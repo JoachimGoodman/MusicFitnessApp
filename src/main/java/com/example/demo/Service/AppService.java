@@ -23,11 +23,11 @@ import java.util.Map;
 @Service
 public class AppService {
     Map<String,Socket> usersockets=new Hashtable<>();
-    ServerSocket ss;
     Socket s;
     DataOutputStream sout;
     DataInputStream sin;
-    Clienthandler ch;
+    static ServerSocket ss;
+    static Clienthandler ch;
     @Autowired
     private MusicRepo mr;
 
@@ -71,17 +71,17 @@ public class AppService {
         }
     }
 
-    public void openServerSocket() throws IOException {
+    public static void openServerSocket() throws IOException {
         DataContainer.Clientlistmap.put(1,new ArrayList<Socket>());
         DataContainer.Clientlistmap.put(2,new ArrayList<Socket>());
-        ss=new ServerSocket(8000);
-       ch=new Clienthandler();
-       Thread t = new Thread(ch);
-       t.start();
+        ss = new ServerSocket(8000);
+        ch = new Clienthandler();
+        Thread t = new Thread(ch);
+        t.start();
     }
 
 
-    public class Clienthandler implements Runnable {
+    public static class Clienthandler implements Runnable {
         @Override
         public void run() {
             while (true){
