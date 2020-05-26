@@ -1,7 +1,6 @@
-<audio
+<audio controls
        id="song"
        preload="auto"
-       src=""
        type="audio/mpeg" ></audio>
 
 <div id="song-name"></div>
@@ -58,8 +57,10 @@
         const userid = document.getElementById('userid').textContent
         $.get("http://localhost:5000/sync?userid=" + userid, function(data, status){
             console.log(data)
-            const audioPlayer = document.getElementById("audio");
-            audioPlayer.src = data.path +  "#t=" + data.time_stamp
+            const audioPlayer = document.getElementById("song");
+            console.log(data.path)
+            audioPlayer.src = data.path + "#t=" + data.time_stamp
+
             audioPlayer.play()
         });
     }
@@ -75,7 +76,7 @@
 
     var playing = true
 
-    document.querySelector('#song').src = musicJson.song_src
+    //document.querySelector('#song').src = musicJson.song_src
 
     /* Adds Play and Pause button */
     function playPause() {
