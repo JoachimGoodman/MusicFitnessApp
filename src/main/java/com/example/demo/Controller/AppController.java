@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,9 +31,10 @@ public class AppController {
         return null;
     }
     @PostMapping("/joinGroup/{groupid}/{userid}")
-    public Object joinGroup(@PathVariable String groupid, @PathVariable String userid) throws IOException {
+    public Object joinGroup(HttpSession session,@PathVariable String groupid, @PathVariable String userid) throws IOException {
         System.out.println(userid);
         appService.startClient(groupid, userid);
+        session.setAttribute("currentgroup",groupid);
         return null;
     }
 
