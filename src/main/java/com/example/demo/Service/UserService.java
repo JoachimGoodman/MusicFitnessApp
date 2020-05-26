@@ -23,7 +23,9 @@ public class UserService {
 
     public void findAll(){
         System.out.println(ur.findAll());
-
+    }
+    public User getSingle(String username){
+        return ur.findByUsername(username);
     }
 
     public void createUser(User user) {

@@ -1,26 +1,57 @@
 package com.example.demo.Model;
 
 import javax.persistence.*;
+import java.net.Socket;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
-
-    @Id
+    @Transient
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     //private int fk_rank;
-    @Column(name = "username")
+    @Id
+    @Column(table="users",name = "username")
     private String username;
-    @Column(name = "password")
+    @Column(table="users",name = "password")
     private String password;
-
+    @Transient
+    private Socket usersocket;
+    @Transient
     private String firstname;
-
+    @Transient
     private String lastname;
-
+    @Transient
     private String email;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "UserGroups",
+            joinColumns = @JoinColumn(name = "user"),
+            inverseJoinColumns = @JoinColumn(name = "group"))
+    List<Group> groups;
+/*
+    @ManyToMany
+    @JoinTable(name="'Friendslists'",
+            joinColumns=@JoinColumn(name="'User'"),
+            inverseJoinColumns=@JoinColumn(name="'Friend'")
+    )
+    @Transient
+    private List<User> friends;
+
+    @ManyToMany
+    @JoinTable(name="'Friendslists'",
+            joinColumns=@JoinColumn(name="'User'"),
+            inverseJoinColumns=@JoinColumn(name="'Friend'")
+    )
+    @Transient
+    private List<User> friendOf;
+
+*/
 
     //JPA uses a default constructer indirectly which is why it is protected,
     protected User () {}
@@ -32,6 +63,11 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+    }
+
+    public User(Socket usersocket, String username) {
+        this.usersocket=usersocket;
+        this.username=username;
     }
 
     public String getUsername() {
@@ -94,9 +130,30 @@ public class User {
 
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-   /* public int getFk_rank() {
+    public Socket getUsersocket() {
+        return usersocket;
+    }
+
+    public void setUsersocket(Socket usersocket) {
+        this.usersocket = usersocket;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+/* public int getFk_rank() {
         return fk_rank;
     }
 

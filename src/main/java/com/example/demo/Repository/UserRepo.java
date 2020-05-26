@@ -14,9 +14,10 @@ import java.util.List;
 // og give dem en autoritetsrolle i en anden tabel.
 
 @Repository
-public interface UserRepo extends JpaRepository<User, Integer> {
-    //User findByUsername(String username);
+public interface UserRepo extends JpaRepository<User, String> {
     List<User> findAll();
+
+    User findByUsername(String username);
 
     @Modifying
     @Query(value = "insert into users (username,password,enabled, firstname, lastname, email) VALUES (:username,:password,:enabled, :firstname, :lastname, :email);", nativeQuery = true)
@@ -27,5 +28,10 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     @Query(value = "insert into authorities values (:username,:role);", nativeQuery = true)
     @Transactional
     void logPermission(@Param("username") String username,@Param("role")String role);
+
+    @Query(
+            value = "SELECT * FROM  u WHERE u.status = 1",
+            nativeQuery = true)
+    List<User> findAllActiveUsersNative();
 }
 

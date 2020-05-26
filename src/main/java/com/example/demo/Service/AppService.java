@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Music;
+import com.example.demo.Model.User;
 import com.example.demo.Repository.DataContainer;
 import com.example.demo.Repository.MusicRepo;
 import org.json.JSONObject;
@@ -22,34 +23,33 @@ import java.util.Map;
 
 @Service
 public class AppService {
-    Map<String, Socket> usersockets = new Hashtable<>();
+    Map<String,Socket> usersockets=new Hashtable<>();
+    public static ServerSocket ss;
     Socket s;
     DataOutputStream sout;
     DataInputStream sin;
-    static ServerSocket ss;
-    static Clienthandler ch;
+    public static Clienthandler ch;
     @Autowired
     private MusicRepo mr;
 
     public AppService() throws IOException {
-
     }
 
-    public void startClient(String groupid, String userid) throws IOException {
-        s = new Socket("localhost",8000);
-        DataOutputStream cos = new DataOutputStream(s.getOutputStream());
-        cos.writeUTF(groupid);
+    public void startClient(String groupid,String userid) throws IOException {
+        s=new Socket("localhost",8000);
+        DataOutputStream cos=new DataOutputStream(s.getOutputStream());
+        cos.writeUTF(groupid+";"+userid);
         usersockets.put(userid,s);
 
 
     }
 
     public Object waitForHost(String userid) throws IOException {
-        DataInputStream csin = new DataInputStream(usersockets.get(userid).getInputStream());
+        DataInputStream csin=new DataInputStream(usersockets.get(userid).getInputStream());
         String msg = csin.readUTF();
-        System.out.println("got: " + msg);
+        System.out.println("got: "+msg);
         Music music = new Music();
-        String msga[] = msg.split(";");
+        String msga[]=msg.split(";");
         music.setPath(msga[0]);
         music.setTime_stamp(msga[1]);
         return music;
@@ -59,26 +59,34 @@ public class AppService {
         return mr.findAll();
     }
 
-    public void sendTrack(String path, String time, String pitch, int groupid) throws IOException {
-        for (int i =0; i < DataContainer.Clientlistmap.get(groupid).size(); i++) {
-            List<Socket> grouplist = DataContainer.Clientlistmap.get(groupid);
-            sout = new DataOutputStream(grouplist.get(i).getOutputStream());
+    public void exitGroup(int groupid,String username) throws IOException {
+        for (int i = 0; i<DataContainer.Clientlistmap.get(groupid).size();i++){
+            if (DataContainer.Clientlistmap.get(groupid).get(i).getUsername().equals(username)){
+                DataContainer.Clientlistmap.get(groupid).get(i).getUsersocket().close();
+                DataContainer.Clientlistmap.get(groupid).remove(i);
+            }
+        }
+    }
+    public void sendTrack(String path,String time,int groupid) throws IOException {
+        for (int i =0;i<DataContainer.Clientlistmap.get(groupid).size();i++) {
+            List<User> grouplist=DataContainer.Clientlistmap.get(groupid);
+            sout = new DataOutputStream(grouplist.get(i).getUsersocket().getOutputStream());
             Float hours = Float.valueOf(time) / 3600;
             Float minutes = (Float.valueOf(time) % 3600) / 60;
             Float seconds = Float.valueOf(time) % 60;
             String timeString = String.format("%02d:%02d:%02d", Math.round(hours), Math.round(minutes), Math.round(seconds));
-            System.out.println("Send: " + path + ";" + time);
+            System.out.println("Send: "+path + ";" + time);
             sout.writeUTF(path + ";" + timeString);
         }
     }
 
     public static void openServerSocket() throws IOException {
-        DataContainer.Clientlistmap.put(1, new ArrayList<Socket>());
-        DataContainer.Clientlistmap.put(2, new ArrayList<Socket>());
-        ss = new ServerSocket(8000);
-        ch = new Clienthandler();
-        Thread t = new Thread(ch);
-        t.start();
+        DataContainer.Clientlistmap.put(1,new ArrayList<User>());
+        DataContainer.Clientlistmap.put(2,new ArrayList<User>());
+        ss=new ServerSocket(8000);
+       ch=new Clienthandler();
+       Thread t = new Thread(ch);
+       t.start();
     }
 
 
@@ -87,14 +95,20 @@ public class AppService {
         public void run() {
             while (true){
                 try {
-                    Socket client = ss.accept();
-                    DataInputStream sin = new DataInputStream(client.getInputStream());
-                    Integer groupid = Integer.valueOf(sin.readUTF());
-                    DataContainer.Clientlistmap.get(groupid).add(client);
+                    Socket client=ss.accept();
+                    DataInputStream sin=new DataInputStream(client.getInputStream());
+                    String msg=sin.readUTF();
+                    String msga[]=msg.split(";");
+                    Integer groupid = Integer.valueOf(msga[0]);
+                    DataContainer.Clientlistmap.get(groupid).add(new User(client,msga[1]));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
             }
+
+
         }
     }
 }
