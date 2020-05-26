@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Group;
 import com.example.demo.Model.User;
 import com.example.demo.Service.AppService;
 import com.example.demo.Service.UserService;
@@ -45,6 +46,7 @@ public class LoginController {
               username = principal.toString();
           }
           System.out.println(username);
+          model.addAttribute("group",new Group());
           model.addAttribute("groups",us.getSingle(username).getGroups());
           return "groups";
       }
