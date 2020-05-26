@@ -43,6 +43,7 @@
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         var dateTime = date+':'+time;
         var groupid = document.getElementById('groupid')
+        console.log(document.getElementById('pitch').value)
         $.post("http://localhost:5000/syncU?groupid="+groupid.textContent,
             {
                 musicName: "SONG NAME",
@@ -62,8 +63,8 @@
             console.log(data)
             const audioPlayer = document.getElementById("song");
             console.log(data.path)
-            audioPlayer.playbackRate = data.pitch
             audioPlayer.src = data.path + "#t=" + data.time_stamp
+            audioPlayer.playbackRate = data.pitch
 
             audioPlayer.play()
         });
