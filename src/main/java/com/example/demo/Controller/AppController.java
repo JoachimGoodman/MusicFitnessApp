@@ -35,7 +35,7 @@ public class AppController {
         System.out.println(userid);
         appService.startClient(groupid, userid);
         session.setAttribute("currentgroup",groupid);
-        return null;
+        return "redirect:/";
     }
 
 //    @PostMapping("/play/{music_name}/{time}/{groupid}")
