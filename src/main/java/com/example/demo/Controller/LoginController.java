@@ -45,7 +45,7 @@ public class LoginController {
               username = principal.toString();
           }
           System.out.println(username);
-          model.addAttribute("user",us.getSingle(username).getGroups());
+          model.addAttribute("groups",us.getSingle(username).getGroups());
           return "groups";
       }
 
