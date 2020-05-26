@@ -2,6 +2,7 @@ package com.example.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.web.JsonPath;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ public class Music {
     private String musicName;
     private String path;
     private String time_stamp;
+    private String pitch;
 
 
     public int getId() {
@@ -25,15 +27,14 @@ public class Music {
     public void setId(int id) {
         this.id = id;
     }
-
+    @JsonProperty
     public String getMusicName() {
         return musicName;
     }
 
-    public void setMusicName(String name) {
-        this.musicName = name;
+    public void setMusicName(String musicName) {
+        this.musicName = musicName;
     }
-
     @JsonProperty
     public String getPath() {
         return path;
@@ -49,6 +50,14 @@ public class Music {
 
     public void setTime_stamp(String time_stamp) {
         this.time_stamp = time_stamp;
+    }
+    @JsonProperty
+    public String getPitch() {
+        return pitch;
+    }
+
+    public void setPitch(String pitch) {
+        this.pitch = pitch;
     }
 }
 

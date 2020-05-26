@@ -42,7 +42,8 @@ public class AppController {
     }
     @PostMapping("/syncU")
     public void sendTrack(@ModelAttribute Music m, @RequestParam String groupid) throws IOException {
-        appService.sendTrack(m.getPath(), m.getTime_stamp(), Integer.valueOf(groupid));
+        //+System.out.println(m);
+        appService.sendTrack(m.getPath(), m.getTime_stamp(), m.getPitch(), Integer.valueOf(groupid));
 
     }
 

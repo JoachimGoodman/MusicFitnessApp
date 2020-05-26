@@ -59,7 +59,7 @@ public class AppService {
         return mr.findAll();
     }
 
-    public void sendTrack(String path,String time,int groupid) throws IOException {
+    public void sendTrack(String path, String time, String pitch, int groupid) throws IOException {
         for (int i =0; i < DataContainer.Clientlistmap.get(groupid).size(); i++) {
             List<Socket> grouplist = DataContainer.Clientlistmap.get(groupid);
             sout = new DataOutputStream(grouplist.get(i).getOutputStream());

@@ -26,20 +26,26 @@
 <!--</div>-->
 <button type="button" id="postButton" onclick="postData()">Send data</button>
 
+<div sec:authorize="isAuthenticated()">
+    <span sec:authentication="name" id="userid"></span>
+</div>
+
 <script type="application/javascript">
+
+
     /* Receives data from our API */
     function postData() {
+        const userid = document.getElementById('userid').textContent
+        console.log(userid)
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         var dateTime = date+':'+time;
-        $.post("http://localhost:5000/syncU",
+        $.post("http://localhost:5000/syncU?userid=" + userid,
             {
-                song_src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                musicName: "SONG NAME",
                 path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                song_name: "song name",
-                song_title: "song ittle",
-                progress: document.getElementById('song').currentTime,
+                time_stamp: document.getElementById('song').currentTime,
                 pitch: document.getElementById('pitch').value
             },
             function () {
@@ -49,7 +55,8 @@
     }
 
     function receiveData() {
-        $.get("http://localhost:5000/sync", function(data, status){
+        const userid = document.getElementById('userid').textContent
+        $.get("http://localhost:5000/sync?userid=" + userid, function(data, status){
             console.log(data)
             const audioPlayer = document.getElementById("audio");
             audioPlayer.src = data.path +  "#t=" + data.time_stamp
