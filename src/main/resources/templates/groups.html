@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<table  id="dtBasicExample" class="tdata table table-striped">
+    <thead>
+    <tr>
+        <th>Gruppenavn</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${groups}">
+        <td th:text="${group.groupname}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
