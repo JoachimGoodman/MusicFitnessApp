@@ -51,6 +51,7 @@ public class AppService {
         String msga[]=msg.split(";");
         music.setPath(msga[0]);
         music.setTime_stamp(msga[1]);
+        music.setPitch(msga[2]);
         return music;
     }
 
@@ -66,7 +67,7 @@ public class AppService {
             }
         }
     }
-    public void sendTrack(String path,String time,int groupid) throws IOException {
+    public void sendTrack(String path, String time, String pitch, int groupid) throws IOException {
         for (int i =0;i<DataContainer.Clientlistmap.get(groupid).size();i++) {
             List<User> grouplist=DataContainer.Clientlistmap.get(groupid);
             sout = new DataOutputStream(grouplist.get(i).getUsersocket().getOutputStream());
@@ -74,8 +75,8 @@ public class AppService {
             Float minutes = (Float.valueOf(time) % 3600) / 60;
             Float seconds = Float.valueOf(time) % 60;
             String timeString = String.format("%02d:%02d:%02d", Math.round(hours), Math.round(minutes), Math.round(seconds));
-            System.out.println("Send: "+path + ";" + time);
-            sout.writeUTF(path + ";" + timeString);
+            System.out.println("Send: "+path + ";" + time + ";"+pitch);
+            sout.writeUTF(path + ";" + timeString+ ";" +pitch);
         }
     }
 
