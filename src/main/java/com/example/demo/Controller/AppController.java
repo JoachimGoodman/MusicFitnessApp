@@ -22,27 +22,27 @@ public class AppController {
         return null;
     }
     @GetMapping("/joinGroup/{id}")
-    public Object joinGroup(@PathVariable String id,@RequestParam String userid) throws IOException {
+    public Object joinGroup(@PathVariable String id, @RequestParam String userid) throws IOException {
         System.out.println(userid);
-        appService.startClient(id,userid);
+        appService.startClient(id, userid);
         return null;
     }
 
-    @PostMapping("/play/{music_name}/{time}/{groupid}")
-    public Object postMusic() throws IOException {
-        //appService.startClient();
-        return "index";
-    }
+//    @PostMapping("/play/{music_name}/{time}/{groupid}")
+//    public Object postMusic() throws IOException {
+//        //appService.startClient();
+//        return "index";
+//    }
 
     @GetMapping("/sync")
     public Object sync(@RequestParam String userid) throws IOException {
-        System.out.println("id: "+userid);
+        System.out.println("id: " + userid);
         return appService.waitForHost(userid);
 
     }
     @PostMapping("/syncU")
-    public void sendTrack(@ModelAttribute Music m,@RequestParam String groupid) throws IOException {
-        appService.sendTrack(m.getPath(),m.getTime_stamp(),Integer.valueOf(groupid));
+    public void sendTrack(@ModelAttribute Music m, @RequestParam String groupid) throws IOException {
+        appService.sendTrack(m.getPath(), m.getTime_stamp(), Integer.valueOf(groupid));
 
     }
 

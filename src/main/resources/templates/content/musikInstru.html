@@ -22,9 +22,9 @@
 <p id="pitchText"></p>
 <br>
 <!--<div sec:authorize="hasAuthority('ADMIN')" >-->
-    <button  type="button" id="button">Request data</button>
+<button  type="button" id="button" onclick="receiveData()">Request data</button>
 <!--</div>-->
-<button type="button" id="postButton">Send data</button>
+<button type="button" id="postButton" onclick="postData()">Send data</button>
 
 <script type="application/javascript">
     /* Receives data from our API */
@@ -35,8 +35,12 @@
         var dateTime = date+':'+time;
         $.post("http://localhost:5000/syncU",
             {
+                song_src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
                 path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                time_stamp: x.currentTime
+                song_name: "song name",
+                song_title: "song ittle",
+                progress: document.getElementById('song').currentTime,
+                pitch: document.getElementById('pitch').value
             },
             function () {
                 console.log("send")
@@ -46,6 +50,7 @@
 
     function receiveData() {
         $.get("http://localhost:5000/sync", function(data, status){
+            console.log(data)
             const audioPlayer = document.getElementById("audio");
             audioPlayer.src = data.path +  "#t=" + data.time_stamp
             audioPlayer.play()
