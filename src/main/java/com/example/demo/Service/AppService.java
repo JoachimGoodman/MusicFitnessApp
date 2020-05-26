@@ -36,12 +36,10 @@ public class AppService {
     }
 
     public void startClient(String groupid,String userid) throws IOException {
-        s=new Socket("localhost",8000);
+        s = new Socket("localhost",8000);
         DataOutputStream cos=new DataOutputStream(s.getOutputStream());
         cos.writeUTF(groupid+";"+userid);
         usersockets.put(userid,s);
-
-
     }
 
     public Object waitForHost(String userid) throws IOException {

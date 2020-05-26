@@ -41,7 +41,7 @@
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         var dateTime = date+':'+time;
-        $.post("http://localhost:5000/syncU?userid=" + userid,
+        $.post("http://localhost:5000/syncU?groupid=2",
             {
                 musicName: "SONG NAME",
                 path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",

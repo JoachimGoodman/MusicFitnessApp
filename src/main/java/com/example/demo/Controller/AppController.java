@@ -4,6 +4,9 @@ import com.example.demo.Model.Music;
 import com.example.demo.Service.AppService;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -26,10 +29,10 @@ public class AppController {
         us.findAll();
         return null;
     }
-    @GetMapping("/joinGroup/{id}")
-    public Object joinGroup(@PathVariable String id, @RequestParam String userid) throws IOException {
+    @PostMapping("/joinGroup/{groupid}/{userid}")
+    public Object joinGroup(@PathVariable String groupid, @PathVariable String userid) throws IOException {
         System.out.println(userid);
-        appService.startClient(id, userid);
+        appService.startClient(groupid, userid);
         return null;
     }
 
@@ -48,13 +51,11 @@ public class AppController {
     public void sendTrack(@ModelAttribute Music m, @RequestParam String groupid) throws IOException {
         //+System.out.println(m);
         appService.sendTrack(m.getPath(), m.getTime_stamp(), Integer.valueOf(groupid));
-
     }
-
 
     @GetMapping("/openServerSocket")
     public void openServerSocket() throws IOException {
         appService.openServerSocket();
-
     }
+
 }
