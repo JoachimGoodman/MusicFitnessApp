@@ -34,6 +34,7 @@ public class LoginController {
            username = principal.toString();
         }
         System.out.println(username);
+        session.setAttribute("currentuser",username);
         return "redirect:/";
       }
       @GetMapping("/getGroups")

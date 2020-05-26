@@ -39,6 +39,7 @@ public class AppService {
         s = new Socket("localhost",8000);
         DataOutputStream cos=new DataOutputStream(s.getOutputStream());
         cos.writeUTF(groupid+";"+userid);
+        System.out.println("START CLIENT : "+userid+" "+groupid);
         usersockets.put(userid,s);
     }
 

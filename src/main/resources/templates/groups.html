@@ -18,7 +18,7 @@
         <td th:text="${group.groupname}"></td>
         <td th:text="${group.id}"></td>
         <td>
-            <form th:action="@{/joinGroup/{id}/{userid}(id=${group.id}, userid=${'user'})}" th:object="${group}" method="POST">
+            <form th:action="@{/joinGroup/{id}/{userid}(id=${group.id}, userid=${session.currentuser})}" th:object="${group}" method="POST">
                 <input type="hidden" th:field="${group}">
                 <button type="submit">JOIN</button>
             </form>

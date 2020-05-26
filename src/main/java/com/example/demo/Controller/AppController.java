@@ -32,7 +32,7 @@ public class AppController {
     }
     @PostMapping("/joinGroup/{groupid}/{userid}")
     public Object joinGroup(HttpSession session,@PathVariable String groupid, @PathVariable String userid) throws IOException {
-        System.out.println(userid);
+        System.out.println("GETTING INTO GETMAPPING JOINGRUP : " + userid  + " " + groupid);
         appService.startClient(groupid, userid);
         session.setAttribute("currentgroup",groupid);
         return "redirect:/";
@@ -51,7 +51,7 @@ public class AppController {
     }
     @PostMapping("/syncU")
     public void sendTrack(@ModelAttribute Music m, @RequestParam String groupid) throws IOException {
-        //+System.out.println(m);
+        System.out.println(groupid);
         appService.sendTrack(m.getPath(), m.getTime_stamp(), Integer.valueOf(groupid));
     }
 
