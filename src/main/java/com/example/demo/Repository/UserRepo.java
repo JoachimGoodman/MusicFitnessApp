@@ -10,6 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+//Repository til Brugere. Her bruges to metoder til at lave nye brugere i databasen
+// og give dem en autoritetsrolle i en anden tabel.
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {

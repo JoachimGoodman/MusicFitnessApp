@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+//Controller til registering af nye brugere. Her er en simpel get og post mapping.
+//data fra frontend bliver lagt i et object og sent videre til UserService.
 @Controller
 public class RegisterController {
 

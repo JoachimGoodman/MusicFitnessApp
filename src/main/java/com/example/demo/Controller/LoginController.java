@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
 
+//Controller til Login. Vores login front og backend er allerede serveret af Springs security starter.
 @Controller
 public class LoginController {
 
