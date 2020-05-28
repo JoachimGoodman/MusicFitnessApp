@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,9 @@ public class LoginController {
 
   @Autowired
   UserService us;
+
+  @Autowired
+  AppService as;
 
       @GetMapping("/session")
       public String createsession(HttpSession session){
@@ -51,6 +55,14 @@ public class LoginController {
           model.addAttribute("groups",us.getSingle(username).getGroups());
           return "groups";
       }
+
+    @PostMapping("/joinGroup/{groupid}/{userid}")
+    public Object joinGroup(HttpSession session, @PathVariable String groupid, @PathVariable String userid) throws IOException {
+        System.out.println(userid);
+        as.startClient(groupid, userid);
+        session.setAttribute("currentgroup",groupid);
+        return "redirect:/";
+    }
 
 //    @GetMapping("/login")
 //    public String login(Model model){

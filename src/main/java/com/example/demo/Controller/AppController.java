@@ -30,13 +30,7 @@ public class AppController {
         us.findAll();
         return null;
     }
-    @PostMapping("/joinGroup/{groupid}/{userid}")
-    public Object joinGroup(HttpSession session,@PathVariable String groupid, @PathVariable String userid) throws IOException {
-        System.out.println(userid);
-        appService.startClient(groupid, userid);
-        session.setAttribute("currentgroup",groupid);
-        return null;
-    }
+
 
 //    @PostMapping("/play/{music_name}/{time}/{groupid}")
 //    public Object postMusic() throws IOException {
