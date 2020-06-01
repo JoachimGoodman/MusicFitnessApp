@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Group;
-import com.example.demo.Model.User;
 import com.example.demo.Service.AppService;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 //Controller til Login. Vores login front og backend er allerede serveret af Springs security starter.
 @Controller
@@ -53,7 +50,7 @@ public class LoginController {
           System.out.println(username);
           model.addAttribute("group",new Group());
           model.addAttribute("groups",us.getSingle(username).getGroups());
-          return "groups";
+          return "content/groups";
       }
 
     @PostMapping("/joinGroup/{groupid}/{userid}")

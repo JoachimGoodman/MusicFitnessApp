@@ -19,7 +19,7 @@
     font-weight: bold;
 }
 
-#sidebar > ul.nav > li > a.active, #sidebar > ul.nav > li > a:hover {
+#sidebar ul.nav > li > a.active, #sidebar ul.nav > li > a:hover {
     background: #000000;
     color: #f8ff8d;
 }
@@ -37,4 +37,11 @@ pre.code-block{
 input[type=range] {
     width: 100%;
     border: none;
+}
+/*bootstrap overrides*/
+.btn-primary, .btn-primary:hover {
+    color: #f8ff8d;
+    background-color: #000;
+    border-color: #000;
+
 }

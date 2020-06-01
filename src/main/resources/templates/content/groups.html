@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<table id="dtBasicExample" class="tdata table table-striped">
+    <thead>
+    <tr>
+        <th>Gruppenavn</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${groups}">
+        <td th:text="${group.groupname}"></td>
+        <td th:text="${group.id}"></td>
+        <td>
+            <form th:action="@{/joinGroup/{id}/{userid}(id=${group.id}, userid=${session.currentuser})}"
+                  th:object="${group}" method="POST">
+                <input type="hidden" th:field="${group}">
+                <button type="submit" class="btn btn-primary">Join</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -4,8 +4,8 @@
 <!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">-->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head xmlns:sec="http://www.w3.org/1999/xhtml">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -14,7 +14,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" th:href="@{style.css}">
@@ -31,13 +30,9 @@
     </nav>
 </div>
 
-<div sec:authorize="isAuthenticated()">
-    Authenticated as <span sec:authentication="name"></span>
-</div>
-
 <div class="container-fluid">
     <div class="row">
-        <div id="sidebar" class="col-3">
+        <div id="sidebar" class="col-sm-3">
             <h6>Music</h6>
             <ul class="nav flex-column">
                 <li class="nav-item">
@@ -47,18 +42,28 @@
                     <a class="nav-link" href="#" data-subject="musikBruger">Musik Bruger</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/getGroups">Groups</a>
+                    <a class="nav-link" href="#" data-route="/getGroups" data-subject="groups">Grupper</a>
                 </li>
             </ul>
             <h6>Bruger</h6>
-            <ul class="nav flex-column">
+            <ul sec:authorize="isAuthenticated()" class="nav flex-column">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" >Authenticated as <span sec:authentication="name"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link" >Logout</a>
+                </li>
+            </ul>
+            <ul sec:authorize="isAnonymous()" class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/register">Registere</a>
+                    <a class="nav-link"  href="#" data-route="/register" >Registrer</a>
                 </li>
             </ul>
+
+
 
 <!--                <li class="nav-item">-->
 <!--                    <a class="nav-link" href="#" data-subject="crossfit">Crossfit</a>-->
@@ -104,7 +109,7 @@
 <!--                </li>-->
 <!--            </ul>-->
         </div>
-        <div id="content" class="col-9">
+        <div id="content" class="col-sm-9">
             <h5>
                 Velkommen til Fitnes Sound</h5>
             <p>
@@ -130,7 +135,12 @@
     $(document).ready(function () {
         $("ul a.nav-link").click(function () {
             var subject = $(this).data("subject");
-            $.get("/content/?content=" + subject, function (content) {
+            var route = $(this).data("route");
+            var url = "/content/?content=" + subject;
+            if(route) {
+                url = route;
+            }
+            $.get(url, function (content) {
                 $('#content').html(content);
             });
             $("#sidebar > ul.nav > li > a").removeClass("active");
