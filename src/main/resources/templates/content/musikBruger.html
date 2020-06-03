@@ -58,4 +58,23 @@
 
     setInterval(updateVolume, 500)
 
+
+    /* Pitch function */
+    function updatePitch() {
+        const pitch = document.querySelector('#pitch')
+        pitch.value = document.querySelector('#song').playbackRate
+        document.querySelector('#pitchText').textContent = (pitch.value * 100).toFixed(0) + " %"
+
+    }
+
+    setInterval(updatePitch, 1000)
+
+    /* Update and Change audio progress. Adds audio progress controls */
+    function updateProgress() {
+        const progress = document.querySelector('#progress')
+        progress.max = document.querySelector('#song').duration
+        progress.value = document.querySelector('#song').currentTime
+    }
+
+    setInterval(updateProgress, 1000)
 </script>
