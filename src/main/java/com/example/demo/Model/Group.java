@@ -15,7 +15,7 @@ public class Group {
     private String groupname;
 
     @ManyToMany(mappedBy = "groups")
-    List<User> students;
+    List<User> users;
 
     public int getId() {
         return id;
@@ -33,11 +33,11 @@ public class Group {
         this.groupname = groupname;
     }
 
-    public List<User> getStudents() {
-        return students;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setStudents(List<User> students) {
-        this.students = students;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

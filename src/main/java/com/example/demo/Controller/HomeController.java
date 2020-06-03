@@ -14,12 +14,12 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/play")
+  /*  @GetMapping("/play")
     public String video() {return "video";} // test
 
     @GetMapping("/profil")
     public String profil() {
         return "content/old/mininformation";
-    }
+    }*/
 
 }

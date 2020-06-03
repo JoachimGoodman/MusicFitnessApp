@@ -35,7 +35,7 @@ public class AppService {
     public AppService() throws IOException {
     }
 
-    public void startClient(String groupid,String userid) throws IOException {
+    public void joinGroup(String groupid,String userid) throws IOException {
         s = new Socket("localhost",8000);
         DataOutputStream cos=new DataOutputStream(s.getOutputStream());
         cos.writeUTF(groupid+";"+userid);
@@ -43,7 +43,7 @@ public class AppService {
         usersockets.put(userid,s);
     }
 
-    public Object waitForHost(String userid) throws IOException {
+    public Object syncTrack(String userid) throws IOException {
         DataInputStream csin=new DataInputStream(usersockets.get(userid).getInputStream());
         String msg = csin.readUTF();
         System.out.println("got: "+msg);

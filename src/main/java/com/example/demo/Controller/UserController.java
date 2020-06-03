@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Group;
+import com.example.demo.Model.User;
 import com.example.demo.Service.AppService;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -17,7 +19,7 @@ import java.io.IOException;
 
 //Controller til Login. Vores login front og backend er allerede serveret af Springs security starter.
 @Controller
-public class LoginController {
+public class UserController {
 
   @Autowired
   UserService us;
@@ -54,12 +56,27 @@ public class LoginController {
       }
 
     @PostMapping("/joinGroup/{groupid}/{userid}")
-    public Object joinGroup(HttpSession session, @PathVariable String groupid, @PathVariable String userid) throws IOException {
+    public String joinGroup(HttpSession session, @PathVariable String groupid, @PathVariable String userid) throws IOException {
         System.out.println(userid);
-        as.startClient(groupid, userid);
+        as.joinGroup(groupid, userid);
         session.setAttribute("currentgroup",groupid);
         return "redirect:/";
     }
+
+    @GetMapping("/register")
+    public String register(){
+
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerSend(@ModelAttribute User user){
+        us.createUser(user);
+        //System.out.println(user);
+
+        return  "redirect:/";
+    }
+
 
 //    @GetMapping("/login")
 //    public String login(Model model){

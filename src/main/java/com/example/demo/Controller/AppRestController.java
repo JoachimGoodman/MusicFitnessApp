@@ -15,20 +15,14 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-public class AppController {
+public class AppRestController {
     private final AppService appService;
 
     @Autowired
     private UserService us;
 
-    public AppController(AppService appService) {
+    public AppRestController(AppService appService) {
         this.appService = appService;
-    }
-
-    @GetMapping("/getMusic")
-    public Object getMusic() throws IOException {
-        us.findAll();
-        return null;
     }
 
 
@@ -39,9 +33,9 @@ public class AppController {
 //    }
 
     @GetMapping("/sync")
-    public Object sync(@RequestParam String userid) throws IOException {
+    public Object syncTrack(@RequestParam String userid) throws IOException {
         System.out.println("id: " + userid);
-        return appService.waitForHost(userid);
+        return appService.syncTrack(userid);
     }
     @PostMapping("/syncU")
     public void sendTrack(@ModelAttribute Music m, @RequestParam String groupid) throws IOException {
