@@ -1,14 +1,25 @@
 <audio controls
        id="song"
        preload="auto"
-       type="audio/mpeg" style='display:none' ></audio>
+       type="audio/mpeg"
+       style="display: none"></audio>
 
 <div id="song-name"></div>
 <div id="song-title"></div>
 <img src="" id="song-image" alt="">
-<button id="previous-song">Previous</button>
-<button id="play-pause" onclick="playPause()">Play</button>
-<button id="next-song">Next</button>
+<!--<button id="previous-song">Previous</button>-->
+<ul style="cursor: pointer">
+
+    <li onclick="postData('https://jsgn.dk/1.mp3', 'Basic Flow 75-105 bpm (FS4vol1)', '0', 1)">Basic Flow 75-105 bpm (FS4vol1)</li>
+
+    <li onclick="postData('https://jsgn.dk/2.mp3', 'Basic Cardio 125 bpm (FS3vol1)', '0', 1)">Basic Cardio 125 bpm (FS3vol1)</li>
+
+    <li onclick="postData('https://jsgn.dk/3.mp3', 'Basic Puls 130 bpm (FS2vol.1)', '0', 1)">Basic Puls 130 bpm (FS2vol.1)</li>
+
+    <li onclick="postData('https://jsgn.dk/4.mp3', 'Basic Pump 135 bpm (FS1vol.1)', '0', 1)">Basic Pump 135 bpm (FS1vol.1)</li>
+
+</ul>
+<!--<button id="next-song">Next</button>-->
 <br>
 <p>Volume</p>
 <input type="range" id="volume" min="0" max="1" value="0.5" step="0.01" onclick="changeVolume()">
@@ -21,9 +32,9 @@
 <p id="pitchText"></p>
 <br>
 <!--<div sec:authorize="hasAuthority('ADMIN')" >-->
-<button  type="button" id="button" onclick="receiveData()">Request data</button>
+<!--<button  type="button" id="button" onclick="receiveData()">Request data</button>-->
 <!--</div>-->
-<button type="button" id="postButton" onclick="postData()">Send data</button>
+<!--<button type="button" id="postButton" onclick="postData()">Send data</button>-->
 
 <div sec:authorize="isAuthenticated()">
     <span sec:authentication="name" id="userid"></span>
@@ -31,11 +42,12 @@
 <div id="groupid" th:text="${session.currentgroup}">
 
 </div>
+
+
 <script type="application/javascript">
 
-
     /* Receives data from our API */
-    function postData() {
+    function postData(src, name, time_stamp, pitch) {
         const userid = document.getElementById('userid').textContent
         console.log(userid)
         var today = new Date();
@@ -43,16 +55,16 @@
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         var dateTime = date+':'+time;
         var groupid = document.getElementById('groupid')
-        console.log(document.getElementById('pitch').value)
+
         $.post("http://localhost:5000/syncU?groupid="+groupid.textContent,
             {
-                musicName: "SONG NAME",
-                path: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                time_stamp: document.getElementById('song').currentTime,
-                pitch: document.getElementById('pitch').value
+                musicName: name,
+                path: src,
+                time_stamp: time_stamp,
+                pitch: pitch
             },
             function () {
-                console.log("send")
+                receiveData()
             }
         )
     }
@@ -60,33 +72,28 @@
     function receiveData() {
         const userid = document.getElementById('userid').textContent
         $.get("http://localhost:5000/sync?userid=" + userid, function(data, status){
-            console.log(data)
             const audioPlayer = document.getElementById("song");
-            console.log(data.path)
+
+            // console.log('src: ', data.path)
+            // console.log('song-name: ', data.musicName)
+            // console.log('time_stamp: ', data.time_stamp)
+            // console.log('pitch: ', data.pitch)
+
+            document.getElementById('song-name').textContent = data.musicName
+
             audioPlayer.src = data.path + "#t=" + data.time_stamp
+
             audioPlayer.playbackRate = data.pitch
 
             audioPlayer.play()
         });
     }
 
-    /* for testing */
-    const musicJson = {
-        "song_src": "audio_test.mp3",
-        "song_name": "Audio Test File",
-        "song_title": "title-song-and-stuff",
-        "progress": "00:15",
-        "pitch": "1.2"
-    }
-
-    var playing = true
-
-    //document.querySelector('#song').src = musicJson.song_src
-
     /* Adds Play and Pause button */
+    var playing = true
     function playPause() {
         const   pp = document.querySelector('#play-pause'),
-                song = document.querySelector('#song')
+            song = document.querySelector('#song')
         if (playing) {
             pp.textContent = "Pause"
             receiveData()
@@ -107,12 +114,20 @@
 
     }
 
-    setInterval(updatePitch, 500)
+    setInterval(updatePitch, 1000)
 
     function changePitch() {
-        const song = document.querySelector('#song')
+        const song = document.getElementById('song')
         const pitchBar = document.querySelector('#pitch')
         song.playbackRate = pitchBar.value
+        console.log('current pitch: ', song.playbackRate)
+
+        // console.log('src: ', song.src)
+        // console.log('song-name: ', document.getElementById('song-name').textContent)
+        // console.log('currentTime: ', song.currentTime)
+        // console.log('pitch: ', pitchBar.value)
+
+        postData(song.src.split("#")[0], "meh", song.currentTime, pitchBar.value)
     }
 
 
@@ -123,11 +138,14 @@
         progress.value = document.querySelector('#song').currentTime
     }
 
-    setInterval(updateProgress, 500)
+    setInterval(updateProgress, 1000)
 
     function changeProgress() {
-        const progress = document.querySelector('#progress');
-        document.querySelector('#song').currentTime = progress.value;
+        const song = document.getElementById('song')
+        const progress = document.querySelector('#progress')
+        document.querySelector('#song').currentTime = progress.value
+
+        postData(song.src.split("#")[0], "meh", progress.value, song.playbackRate)
     }
 
     /* Update and Change volume. Adds volume controls */
@@ -136,7 +154,7 @@
         volume.value = document.querySelector('#song').volume
     }
 
-    setInterval(updateVolume, 500)
+    setInterval(updateVolume, 1000)
 
     function changeVolume() {
         const song = document.querySelector('#song')

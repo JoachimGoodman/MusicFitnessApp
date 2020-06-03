@@ -4,6 +4,7 @@
        type="audio/mpeg" style='display:none'></audio>
 
 <div id="song-name"></div>
+<button  type="button" id="button" onclick="receiveData()">Play</button>
 <!--<div id="song-title"></div>-->
 <img src="" id="song-image" alt="">
 <!--<button id="previous-song">Previous</button>-->
@@ -21,7 +22,6 @@
 <p id="pitchText"></p>
 <br>
 <!--<div sec:authorize="hasAuthority('ADMIN')" >-->
-<button  type="button" id="button" onclick="receiveData()">Request data</button>
 <!--</div>-->
 <!--<button type="button" id="postButton" onclick="postData()">Send data</button>-->
 
@@ -33,9 +33,6 @@
 </div>
 
 <script type="application/javascript">
-    document.getElementById('pitch').disabled = true
-    document.getElementById('progress').disabled = true
-
 
     function receiveData() {
         const userid = document.getElementById('userid').textContent
@@ -60,10 +57,5 @@
     }
 
     setInterval(updateVolume, 500)
-
-    function changeVolume() {
-        const song = document.querySelector('#song')
-        song.volume = document.querySelector('#volume').value
-    }
 
 </script>
